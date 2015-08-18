@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<div class="small-9 large-centered columns">
+<div class="small-centered columns">
+  <%= line_chart Activity.group_by_day(:date).count %>
+</div>
+
+
+<div class="small-centered columns">
 <h1>Total distance from each day of current month</h1>
 <table>
   <thead>
@@ -25,7 +30,7 @@
 </div>
 
 
-<div class="small-9 large-centered columns">
+<div class="small-centered columns">
   <h1>Calendar</h1>
 
 <%= month_calendar table: {class: "calendar"}, tr: {class: "calendar-row"}, td: {class: "day"}, events: @activities do |date, activities| %>
@@ -39,7 +44,7 @@
 <% end %>
 </div>
 
-<div class="small-9 large-centered columns">
+<div class="small-centered columns">
   <h1>Your Stats</h1>
 
 <table>
@@ -67,7 +72,7 @@
 </table>
 </div>
 
-<div class="small-9 large-centered columns">
+<div class="small-centered columns">
   <h1>Listing Activities by date</h1>
 
 <table>
