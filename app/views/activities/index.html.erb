@@ -1,65 +1,70 @@
 <p id="notice"><%= notice %></p>
-
-<div class="small-centered columns">
-  <%= line_chart Activity.group_by_day(:date).count %>
+<div class="row">
+  <div class="small-10 small-centered columns">
+    <%= column_chart Activity.group_by_day(:date, format: "%F").count %>
+  </div>
 </div>
 
-
-<div class="small-centered columns">
-<h1>Total distance from each day of current month</h1>
-<table>
-  <thead>
-    <tr>
-      <th>Day</th>
-      <th>Total daily dist. [km]</th>
-    </tr>
-  </thead>
-  <tbody>
-    <%  Activity.group_by_day(:date, range: DateTime.now.in_time_zone.beginning_of_month..Time.now).sum(:distance).each do |day, activities| %>
-      <tr> 
-        <td><%= day.strftime('%F') %> </td>
-          <% if activities == 0 %>
-          <td class="info round label"><%= activities.round(2)%> [km]</td>
-          <% else %>
-          <td class="success round label"><%= activities.round(2)%> [km]</td>
-          <% end %>
-        <% end %>
+<div class="row">
+  <div class="small-10 small-centered columns">
+    <h1>Total distance from each day of current month</h1>
+    <table>
+      <thead>
+      <tr>
+        <th>Day</th>
+        <th>Total daily dist. [km]</th>
       </tr>
-  </tbody>
-</table>
+      </thead>
+      <tbody>
+      <%  Activity.group_by_day(:date, range: DateTime.now.in_time_zone.beginning_of_month..Time.now).sum(:distance).each do |day, activities| %>
+          <tr>
+            <td><%= day.strftime('%F') %> </td>
+            <% if activities == 0 %>
+                <td class="info round label"><%= activities.round(2)%> [km]</td>
+            <% else %>
+                <td class="success round label"><%= activities.round(2)%> [km]</td>
+            <% end %>
+      <% end %>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 
-<div class="small-centered columns">
-  <h1>Calendar</h1>
+<div class="row">
+  <div class="small-10 small-centered columns">
+    <h1>Calendar</h1>
 
-<%= month_calendar table: {class: "calendar"}, tr: {class: "calendar-row"}, td: {class: "day"}, events: @activities do |date, activities| %>
-  <%= date %>
+    <%= month_calendar table: {class: "calendar"}, tr: {class: "calendar-row"}, td: {class: "day"}, events: @activities do |date, activities| %>
+        <%= date %>
 
-  <% activities.each do |activity| %>
-    <div>
-      <p class="success round label"><%= activity.distance.round(2) %> [km]</p>  
-    </div>
-  <% end %>
-<% end %>
+        <% activities.each do |activity| %>
+            <div>
+              <p class="success round label"><%= activity.distance.round(2) %> [km]</p>
+            </div>
+        <% end %>
+    <% end %>
+  </div>
 </div>
 
-<div class="small-centered columns">
-  <h1>Your Stats</h1>
+<div class="row">
+  <div class="small-10 small-centered columns">
+    <h1>Your Stats</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Total dist. [km]</th>
-      <th>Total dist. this year [km]</th>
-      <th>Total dist. this month [km]</th>
-      <th>Total dist. this week [km]</th>
-      <th>Total dist. today [km]</th>
-      <th>Average dist. [km]</th>
-    </tr>
-  </thead>
+    <table>
+      <thead>
+      <tr>
+        <th>Total dist. [km]</th>
+        <th>Total dist. this year [km]</th>
+        <th>Total dist. this month [km]</th>
+        <th>Total dist. this week [km]</th>
+        <th>Total dist. today [km]</th>
+        <th>Average dist. [km]</th>
+      </tr>
+      </thead>
 
-  <tbody>
+      <tbody>
       <tr>
         <td><%= @activities.sum(:distance).round(2) %></td>
         <td><%= @activities.where(date: Time.zone.now.all_year).sum(:distance).round(2) %></td>
@@ -68,38 +73,44 @@
         <td><%= @activities.where(date: Time.zone.now.all_day).sum(:distance).round(2) %></td>
         <td><%= @activities.average(:distance).round(2) %></td>
       </tr>
-  </tbody>
-</table>
+      </tbody>
+    </table>
+  </div>
 </div>
 
-<div class="small-centered columns">
-  <h1>Listing Activities by date</h1>
+<div class="row">
+  <div class="small-10 small-centered columns">
+    <h1>Listing Activities by date</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Address start</th>
-      <th>Address end</th>
-      <th>Distance [km]</th>
-      <th>Date</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @activities.order("date DESC").each do |activity| %>
+    <table>
+      <thead>
       <tr>
-        <td><%= activity.address_start %></td>
-        <td><%= activity.address_end %></td>
-        <td><%= activity.distance.round(2) %></td>
-        <td><%= activity.date.to_formatted_s(:long) %></td>
-        <td><%= link_to 'Show', activity %></td>
-        <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
-        <td><%= link_to 'Destroy', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Address start</th>
+        <th>Address end</th>
+        <th>Distance [km]</th>
+        <th>Date</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
 
-<br>  
+      <tbody>
+      <% @activities.order("date DESC").each do |activity| %>
+          <tr>
+            <td><%= activity.address_start %></td>
+            <td><%= activity.address_end %></td>
+            <td class="info round label"><%= activity.distance.round(2) %></td>
+            <td><%= activity.date.to_formatted_s(:long) %></td>
+            <td><%= link_to 'Show', activity %></td>
+            <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
+            <td><%= link_to 'Destroy', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <br>
+  </div>
 </div>
+
+
+

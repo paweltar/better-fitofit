@@ -1,9 +1,16 @@
 <p id="notice"><%= notice %></p>
-<div class="small-9 large-centered columns">
-  <ul class="pricing-table">
-    <li class="title"><%= @activity.address_start %> to <%= @activity.address_end %></li>
-    <li class="price"><%= @activity.distance.round(2) %> km.</li>
-    <li class="description"><%= @activity.date.to_formatted_s(:long) %></li>
-    <li class="cta-button"><%= link_to 'Stats', activities_path, class: "success button" %></li>
-  </ul>
+<div class="row">
+  <div class="small-10 small-centered columns">
+    <ul class="pricing-table">
+      <li class="title"><%= @activity.address_start %> to <%= @activity.address_end %></li>
+      <li class="price"><%= @activity.distance.round(2) %> km.</li>
+      <li class="description"><%= @activity.date.to_formatted_s(:long) %></li>
+      <li class="cta-button"><%= link_to 'Stats', activities_path, class: "success button" %></li>
+    </ul>
+  </div>
+
+  <div class="row">
+    <div class="small-10 small-centered columns">
+      
+  </div>
 </div>
