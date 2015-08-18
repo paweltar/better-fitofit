@@ -10,10 +10,14 @@
     </tr>
   </thead>
   <tbody>
-    <% @last_month_act.group_by{|l| l.date.day}.each do |day, activities| %>
+    <%  Activity.group_by_day(:date, range: DateTime.now.in_time_zone.beginning_of_month..Time.now).sum(:distance).each do |day, activities| %>
       <tr> 
-        <td><%= day %> </td>
-        <td><%= activities.sum(&:distance).round(2)%> km.</td>
+        <td><%= day.strftime('%F') %> </td>
+          <% if activities == 0 %>
+          <td class="info round label"><%= activities.round(2)%> [km]</td>
+          <% else %>
+          <td class="success round label"><%= activities.round(2)%> [km]</td>
+          <% end %>
         <% end %>
       </tr>
   </tbody>
