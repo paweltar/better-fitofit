@@ -37,7 +37,26 @@
   </section>
 </nav>
 
-    <%= yield %>
+<%= display_flash_messages %>
 
+    <%= yield %>
+  
+
+  <footer class="row">
+
+<div class="large-12 columns">
+<hr/>
+<div class="row">
+<div class="large-6 columns">
+<p>&copy; PT 2015</p>
+</div>
+<div class="large-6 columns">
+<ul class="inline-list right">
+<li><a href="https://github.com/paweltar">Github</a></li>
+</ul>
+</div>
+</div>
+</div>
+</footer>
   </body>
 </html>

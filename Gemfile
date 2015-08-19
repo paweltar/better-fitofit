@@ -16,6 +16,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'puma'
 gem 'geocoder'
 gem 'foundation-rails'
+gem 'foundation_rails_helper'
 gem 'groupdate'
 gem "simple_calendar", "~> 1.1.0"
 gem "chartkick"
